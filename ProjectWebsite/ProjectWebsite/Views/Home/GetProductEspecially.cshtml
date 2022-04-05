@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ProjectWebsite.Models.PRODUCT>
+<div class="row">
+    <!-- Sản phẩm 1 -->
+    @foreach (var item in Model)
+    {
+        <div class="span4">
+            <div class="product">
+                <div class="product-img featured">
+                    <div class="picture">
+                        <a href="@Url.Action("getDetail","Home",new { id = item.ID})"><img src="~/Content/images/@item.ProductImage" alt="" width="518" height="358"></a>
+                        <div class="img-overlay">
+                            <a href="@Url.Action("getDetail","Home",new { id = item.ID})" class="btn more btn-primary">Chi tiết</a>
+                            <a href="@Url.Action("Addtocart","Cart", new {@ID = item.ID,@strURL = Request.Url.ToString()})" class="btn buy btn-danger">Thêm giỏ hàng</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-titles">
+                    <h4 class="title" style="color:red">@String.Format("{0:0,0}", @item.ProductPrice) VNĐ</h4>
+                    <h5 class="no-margin"><a href="">@item.ProductName</a></h5>
+                </div>
+                <p class="desc">@item.Note</p>
+            </div>
+        </div>
+    }
+
+</div>
+
+
+
+
+
+

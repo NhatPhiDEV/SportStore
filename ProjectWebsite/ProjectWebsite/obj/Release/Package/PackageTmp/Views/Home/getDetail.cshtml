@@ -1,0 +1,162 @@
+﻿@model IEnumerable<ProjectWebsite.Models.PRODUCT>
+
+@{
+    ViewBag.Title = "getDetail";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+@foreach (var item in Model)
+{
+    <div class="darker-stripe">
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="@Url.Action("Index","Home")">Trang chủ</a>
+                        </li>
+                        <li><span class="icon-chevron-right"></span></li>
+                        <li>
+                            <a href="@Url.Action("GetProduct","Product")">Sản phẩm</a>
+                        </li>
+                        <li><span class="icon-chevron-right"></span></li>
+                        <li>
+                            <a href="#">@item.PRODUCT_TYPE.TypeName</a>
+                        </li>
+                        <li><span class="icon-chevron-right"></span></li>
+                        <li>
+                            <a href="product.html">@item.ProductName</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="push-up top-equal blocks-spacer">
+            <div class="row blocks-spacer">
+                <div class="span5">
+                    <div class="product-preview">
+                        <div class="picture">
+                            <img src="~/Content/images/@item.ProductImage" alt="" width="940" height="940" id="mainPreviewImg" />
+                        </div>
+                        <div class="thumbs clearfix">
+                            <div class="thumb active">
+                                <a href="#mainPreviewImg"><img src="~/Content/images/@item.ProductImage" alt="" width="940" height="940" /></a>
+                            </div>
+                            <div class="thumb">
+                                <a href="#mainPreviewImg"><img src="~/Content/images/@item.ProductImage" alt="" width="940" height="940" /></a>
+                            </div>
+                            <div class="thumb">
+                                <a href="#mainPreviewImg"><img src="~/Content/images/@item.ProductImage" alt="" width="940" height="940" /></a>
+                            </div>
+                            <div class="thumb">
+                                <a href="#mainPreviewImg"><img src="~/Content/images/@item.ProductImage" alt="" width="940" height="940" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="span7">
+                    <div class="product-title">
+                        <h1 class="name"><span class="light">@item.ProductName</span></h1>
+                        <div class="meta">
+                            <span class="tag">Giá bán: @String.Format("{0:0,0}", @item.ProductPrice) VND</span>
+                            <span class="stock">
+                                <span class="btn btn-success">Đồ thể thao</span>
+                                <span class="btn btn-warning">Chất lượng tuyệt vời</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="product-description">
+                        <p>
+                            @item.Note
+                        </p>
+                        <hr />
+                        <form action="#" class="form form-inline clearfix">
+                            <div class="numbered">
+                                <input type="text" name="num" value="1" class="tiny-size" />
+                                <span class="clickable add-one icon-plus-sign-alt"></span>
+                                <span class="clickable remove-one icon-minus-sign-alt"></span>
+                            </div>
+                            &nbsp;
+                            <select name="color" class="span2">
+                                <option value="-1">Màu sắc</option>
+                                <option value="blue">Trắng</option>
+                                <option value="orange">Đen</option>
+                                <option value="black">Xanh</option>
+                            </select> &nbsp;
+                            <select name="size" class="span2">
+                                <option value="-1">Size</option>
+                                <option value="XS">S</option>
+                                <option value="S">M</option>
+                                <option value="M">X</option>
+                                <option value="L">XL</option>
+                            </select>
+                            <a href="@Url.Action("Addtocart","Cart", new {@ID = item.ID,@strURL = Request.Url.ToString()})" class="btn buy btn-danger"><i class="icon-shopping-cart"></i> &nbsp; Thêm vào giỏ hàng</a>
+                        </form>
+                        <hr />
+
+
+
+                        <div class="share-item push-down-20">
+                            <div class="row-fluid">
+                                <div class="span5">
+                                    Chia sẽ sản phẩm đến bạn bè:
+                                </div>
+                                <div class="span7">
+                                    <div class="social-networks">
+
+                                        <div class="addthis_toolbox addthis_default_style ">
+                                            <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                                            <a class="addthis_button_tweet"></a>
+                                            <a class="addthis_button_pinterest_pinit"></a>
+                                            <a class="addthis_counter addthis_pill_style"></a>
+                                        </div>
+                                        <script type="text/javascript" src="../../../s7.addthis.com/js/300/addthis_widget.js#pubid=xa-517459541beb3977"></script>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="store-buttons">
+                            <i class="icon-heart"></i> <a href="#">Thêm vào danh sách yêu thích</a> &nbsp;&nbsp; | &nbsp;&nbsp;
+                            <i class="icon-exchange"></i> <a href="#">Thêm đối chiếu</a> &nbsp;&nbsp; | &nbsp;&nbsp;
+                            <i class="icon-envelope-alt"></i> <a href="#">Email cho bạn bè</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Phần comment-->
+            <div class="row">
+                <div class="span12">
+                    <ul id="myTab" class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-1" data-toggle="tab">Thông tin thêm</a>
+                        </li>
+                        <li>
+                            <a href="#tab-2" data-toggle="tab">Phản hồi từ khách hàng</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="fade in tab-pane active" id="tab-1">
+                            <p>
+                                <!--Thông tin thêm-->
+                            </p>
+                        </div>
+                        <div class="fade tab-pane" id="tab-2">
+                            <p>
+                                <!--Thông tin thêm-->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

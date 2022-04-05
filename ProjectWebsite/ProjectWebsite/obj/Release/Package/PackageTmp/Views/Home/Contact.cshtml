@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<!--  -->
+<div class="darker-stripe">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <ul class="breadcrumb"> 
+                    <li>
+                        <a href="@Url.Action("Index","Home")">Trang Chủ</a>
+                    </li>
+                    <li><span class="icon-chevron-right"></span></li>
+                    <li>
+                        <a>Liên Hệ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="push-up top-equal blocks-spacer-last">
+        <div class="row">
+            <div class="span12">
+                <div class="title-area">
+                    <h1 class="inline"><span class="light">Liên Hệ</span> Với Chúng Tôi</h1>
+                </div>
+            </div>
+            <section class="span8 single single-page">
+                <article class="post">
+                    <div class="post-inner">
+                        <p>
+                            Cảm ơn quý khách hàng đã quan tâm đến sản phẩm của chúng tôi. Chúng tôi sẽ ngày càng cải thiện chất lượng của sản phẩm cũng như tăng thêm những chương trình khuyến mãi đặc biệt để tri ân quý vị khách hàng đã tin dùng sản phẩm của chúng tôi.
+                        </p>
+                    </div>
+                </article>
+                <hr />
+                <!--  -->
+                <section class="contact-form-container">
+                    <h3 class="push-down-25"><span class="light">Gửi</span> Tin Nhắn Cho Chúng Tôi</h3>
+                    <form id="commentform" method="post" action="#" class="form form-inline form-contact">
+                        <p class="push-down-20">
+                            <input type="text" aria-required="true" tabindex="1" size="30" value="" id="author" name="author" placeholder="Tên đầy đủ của bạn..." required=required />
+                        </p>
+                        <p class="push-down-20">
+                            <input type="email" aria-required="true" tabindex="2" size="30" value="" id="author" name="author" placeholder="Email liên hệ của bạn..." required=required />
+                        </p>
+                        <p class="push-down-20">
+                            <input type="text" tabindex="3" size="30" value="" id="url" name="url" placeholder="Trang web của bạn nếu có thể..." />
+                        </p>
+                        <p class="push-down-20">
+                            <textarea class="input-block-level" tabindex="4" rows="7" cols="70" id="comment" name="comment" placeholder="Hãy cho chúng tôi biết cảm nghĩ của bạn về chúng tôi..." required=required></textarea>
+                        </p>
+                        <p>
+                            <button class="btn btn-primary bold" type="submit" tabindex="5" id="submit">GỬI CHO CHÚNG TÔI</button>
+                        </p>
+                    </form>
+                </section>
+                <!--  -->
+                <hr />
+
+                <!-- Địa Chỉ -->
+                <article class="company-info">
+                    <div class="row">
+                        <div class="span3">
+                            <h3 class="push-down-30"><span class="light">Địa chỉ</span> của chúng tôi</h3>
+                            <p>
+                                <strong class="opensans dark-clr">SHOP ĐỒ THỂ THAO</strong>
+                                <br /> 51 1 Đặng Văn Bi,
+                                <br /> Trường Thọ, Thủ Đức
+                                <br /> Thành Phố HCM
+                            </p>
+                            <p>
+                                <strong class="opensans dark-clr">Liên Lạc:</strong> 09283723
+                                <br />
+                                <strong class="opensans dark-clr">Số Fax:</strong> 00386 31 567 538
+                                <br />
+                                <strong class="opensans dark-clr">Email:</strong><a href="">honhatphi44@gmail.com</a>
+                            </p>
+                        </div>
+                        <div class="span5">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.646653888627!2d106.76360711375864!3d10.838329492279506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527a8c6ba9345%3A0x1c70fe457cbb68da!2zNTEsIDEgxJDhurduZyBWxINuIEJpLCBUcsaw4budbmcgVGjhu40sIFRo4bunIMSQ4bupYywgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1625409945563!5m2!1svi!2s"
+                                    width="470" height="470" style="border:0;" allowfullscreen="" loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Thời gian làm việc -->
+            <aside class="span4">
+                <div class="sidebar-item opening-time" id="opening_time-4">
+                    <div class="underlined">
+                        <h3><span class="light">Thời gian</span> làm việc</h3>
+                    </div>
+                    <div class="time-table">
+                        <dl class="week-day today">
+                            <dt>
+                                Thứ 2
+                            </dt>
+                            <dd>
+                                7:00 - 22h:30
+                            </dd>
+                        </dl>
+                        <dl class="week-day light-bg">
+                            <dt>
+                                Thứ 3
+                            </dt>
+                            <dd>
+                                7:00 - 22h:30
+                            </dd>
+                        </dl>
+                        <dl class="week-day">
+                            <dt>
+                                Thứ 4
+                            </dt>
+                            <dd>
+                                7:00 - 22h:30
+                            </dd>
+                        </dl>
+                        <dl class="week-day light-bg ">
+                            <dt>
+                                Thứ 5
+                            </dt>
+                            <dd>
+                                7:00 - 22h:30
+                            </dd>
+                        </dl>
+                        <dl class="week-day">
+                            <dt>
+                                Thứ 6
+                            </dt>
+                            <dd>
+                                7:00 - 22h:30
+                            </dd>
+                        </dl>
+                        <dl class="week-day light-bg">
+                            <dt>
+                                Thứ 7
+                            </dt>
+                            <dd>
+                                7:00 - 22h:30
+                            </dd>
+                        </dl>
+                        <dl class="week-day closed">
+                            <dt>
+                                Chủ Nhật
+                            </dt>
+                            <dd>
+                                7:00 - 22h:30
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="sidebar-item widget_twitter">
+                    <div class="underlined">
+                        <h3><span class="light">Twitter</span></h3>
+                    </div>
+                    <a class="twitter-timeline" href="https://twitter.com/primozcigler" data-widget-id="361435057526800385">Tweets by primozcigler</a>
+                    <script>
+                                ! function(d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0],
+                                        p = /^http:/.test(d.location) ? 'http' : 'https';
+                                    if (!d.getElementById(id)) {
+                                        js = d.createElement(s);
+                                        js.id = id;
+                                        js.src = p + "://platform.twitter.com/widgets.js";
+                                        fjs.parentNode.insertBefore(js, fjs);
+                                    }
+                                }(document, "script", "twitter-wjs");
+                    </script>
+                </div>
+            </aside>
+            <!-- End Thời gian làm việc -->
+        </div>
+    </div>
+</div>
+<!--  -->

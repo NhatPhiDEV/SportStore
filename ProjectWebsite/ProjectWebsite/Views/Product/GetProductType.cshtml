@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ProjectWebsite.Models.PRODUCT_TYPE>
+
+<div class="accordion-inner">
+    @foreach (var item in Model)
+    {
+    <div class="PhiMap">
+        <a href="@Url.Action("GetProductWithType","Product",new { id = item.Type})" class="select-type"><i class="box"></i> @item.TypeName</a>
+    </div>     
+    }
+</div>

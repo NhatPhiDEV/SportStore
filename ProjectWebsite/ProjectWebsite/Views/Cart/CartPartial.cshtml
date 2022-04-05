@@ -1,0 +1,7 @@
+﻿<div class="cart">
+    <p class="items" style="color:black;font-size:14px;">Giỏ hàng <span class="dark-clr" style="font-weight:bold">(@ViewBag.TotalCount)</span></p>
+    <p class="dark-clr hidden-tablet" style="color:black;font-size:14px;">@String.Format("{0:0,0}", @ViewBag.TotalMoney) VND</p>
+    <a href="@Url.Action("Oder", "Cart")" class="btn btn-danger">
+        <i class="icon-shopping-cart"></i>
+    </a>
+</div>

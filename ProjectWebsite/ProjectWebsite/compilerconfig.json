@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Content/TableView.css",
+    "inputFile": "Content/TableView.scss"
+  },
+  {
+    "outputFile": "Content/CartView.css",
+    "inputFile": "Content/CartView.scss"
+  }
+]

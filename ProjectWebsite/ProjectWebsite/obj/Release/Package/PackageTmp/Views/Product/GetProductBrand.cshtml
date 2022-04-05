@@ -1,0 +1,9 @@
+﻿@model IEnumerable<ProjectWebsite.Models.PRODUCT_BRAND>
+
+<div class="accordion-inner">
+    @foreach(var item in Model)
+    {
+    <a href="@Url.Action("GetProductWithBrand","Product",new { id = item.Brand})" data-target="s-oliver" data-type="brand" class="select-type"><i class="box"></i>@item.BrandName</a>
+    }
+    
+</div>

@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout_Admin.cshtml";
+}
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout_Admin.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <section class="panel" style="margin-bottom:0px">
+            <header class="panel-heading" style="color:black;font-weight:bold;padding-bottom:0px;text-align:center;font-size:30px">
+                Dữ liệu thông tin khách hàng
+            </header>
+            <div class="panel-body" style="margin-top:0px;min-height: 800px;">
+                <div class="adv-table editable-table">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-1" style="padding-top:15px;padding-left:0">
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                    Chức năng mở rộng <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Print</a></li>
+                                    <li><a href="#">Save as PDF</a></li>
+                                    <li><a href="#">Export to Excel</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6 col-lg-offset-5">
+                                <div class="dataTables_filter" id="editable-sample_filter">
+                                    <label style="font-size:17px;margin-left:34px">
+                                        Tìm kiếm:
+                                        <input type="text" aria-controls="editable-sample" id="txtSearch" style="margin-left:0px;margin-right:20px" placeholder="Nhập điều bạn muốn tìm kiếm vào đây..." class="form-control medium" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <table class="table table-striped table-hover table-bordered" id="edi table-sample">
+                                <thead>
+                                    <tr style="background-color:#2257f3;border: hidden;">
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">STT</th>
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">Tên khách hàng</th>
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">Giới tính</th>
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">Ngày sinh</th>
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">Địa chỉ</th>
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">Tài khoản</th>
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">Liên lạc</th>
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">Email</th>
+                                        <th style="color:#ffffff;font-weight:bold;text-align:center">Xóa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblCustomers">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-12" style="margin:0px;">
+                            <div class="span6 col-lg-offset-6">
+                                <div class="dataTables_paginate paging_bootstrap pagination" style="margin:0px;padding:0px">
+                                    <ul id="pageNumber">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</section>
+<!--Chức năng-->
+<script src="~/Scripts/Admin/js/jquery.js"></script>
+<script src="~/Scripts/Setting/Customers.js"></script>
+<!--End Chức năng-->

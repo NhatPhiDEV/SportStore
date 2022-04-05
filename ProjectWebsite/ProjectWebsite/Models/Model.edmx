@@ -1,0 +1,620 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProductManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ADMIN">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="12" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar" MaxLength="30" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="BILL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="TotalMoney" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerSex" Type="nvarchar" MaxLength="7" />
+          <Property Name="Birthday" Type="datetime" />
+          <Property Name="CustomerAddress" Type="nvarchar(max)" />
+          <Property Name="CustomerEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerPhone" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ProductPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductImage" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ProductCount" Type="int" />
+          <Property Name="Size" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Brand" Type="int" Nullable="false" />
+          <Property Name="Sale" Type="int" Nullable="false" />
+          <Property Name="DateInsert" Type="datetime" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="PRODUCT_BRAND">
+          <Key>
+            <PropertyRef Name="Brand" />
+          </Key>
+          <Property Name="Brand" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PRODUCT_DETAIL">
+          <Key>
+            <PropertyRef Name="DetailID" />
+          </Key>
+          <Property Name="DetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="BillID" Type="int" Nullable="false" />
+          <Property Name="ProductCount" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="PRODUCT_SALE">
+          <Key>
+            <PropertyRef Name="Sale" />
+          </Key>
+          <Property Name="Sale" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleName" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUCT_SIZE">
+          <Key>
+            <PropertyRef Name="Size" />
+          </Key>
+          <Property Name="Size" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SizeName" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="PRODUCT_TYPE">
+          <Key>
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="Type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_BILL_CUSTOMER">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BILL" Type="Self.BILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="BILL">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_DETAIL_BILL">
+          <End Role="BILL" Type="Self.BILL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PRODUCT_DETAIL" Type="Self.PRODUCT_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BILL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCT_DETAIL">
+              <PropertyRef Name="BillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_DETAIL_PRODUCT">
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PRODUCT_DETAIL" Type="Self.PRODUCT_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCT_DETAIL">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_PRODUCT_BRAND">
+          <End Role="PRODUCT_BRAND" Type="Self.PRODUCT_BRAND" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_BRAND">
+              <PropertyRef Name="Brand" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="Brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_PRODUCT_SALE">
+          <End Role="PRODUCT_SALE" Type="Self.PRODUCT_SALE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_SALE">
+              <PropertyRef Name="Sale" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="Sale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_PRODUCT_SIZE">
+          <End Role="PRODUCT_SIZE" Type="Self.PRODUCT_SIZE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_SIZE">
+              <PropertyRef Name="Size" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="Size" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_PRODUCT_TYPE">
+          <End Role="PRODUCT_TYPE" Type="Self.PRODUCT_TYPE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PRODUCT" Type="Self.PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_TYPE">
+              <PropertyRef Name="Type" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductManagementModelStoreContainer">
+          <EntitySet Name="ADMIN" EntityType="Self.ADMIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BILL" EntityType="Self.BILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT" EntityType="Self.PRODUCT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT_BRAND" EntityType="Self.PRODUCT_BRAND" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT_DETAIL" EntityType="Self.PRODUCT_DETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT_SALE" EntityType="Self.PRODUCT_SALE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT_SIZE" EntityType="Self.PRODUCT_SIZE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCT_TYPE" EntityType="Self.PRODUCT_TYPE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BILL_CUSTOMER" Association="Self.FK_BILL_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="BILL" EntitySet="BILL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_DETAIL_BILL" Association="Self.FK_PRODUCT_DETAIL_BILL">
+            <End Role="BILL" EntitySet="BILL" />
+            <End Role="PRODUCT_DETAIL" EntitySet="PRODUCT_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_DETAIL_PRODUCT" Association="Self.FK_PRODUCT_DETAIL_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="PRODUCT_DETAIL" EntitySet="PRODUCT_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_PRODUCT_BRAND" Association="Self.FK_PRODUCT_PRODUCT_BRAND">
+            <End Role="PRODUCT_BRAND" EntitySet="PRODUCT_BRAND" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_PRODUCT_SALE" Association="Self.FK_PRODUCT_PRODUCT_SALE">
+            <End Role="PRODUCT_SALE" EntitySet="PRODUCT_SALE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_PRODUCT_SIZE" Association="Self.FK_PRODUCT_PRODUCT_SIZE">
+            <End Role="PRODUCT_SIZE" EntitySet="PRODUCT_SIZE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_PRODUCT_TYPE" Association="Self.FK_PRODUCT_PRODUCT_TYPE">
+            <End Role="PRODUCT_TYPE" EntitySet="PRODUCT_TYPE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProductManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ProductManagementContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ADMIN" EntityType="ProductManagementModel.ADMIN" />
+          <EntitySet Name="BILL" EntityType="ProductManagementModel.BILL" />
+          <EntitySet Name="CUSTOMER" EntityType="ProductManagementModel.CUSTOMER" />
+          <EntitySet Name="PRODUCT" EntityType="ProductManagementModel.PRODUCT" />
+          <EntitySet Name="PRODUCT_BRAND" EntityType="ProductManagementModel.PRODUCT_BRAND" />
+          <EntitySet Name="PRODUCT_DETAIL" EntityType="ProductManagementModel.PRODUCT_DETAIL" />
+          <EntitySet Name="PRODUCT_SALE" EntityType="ProductManagementModel.PRODUCT_SALE" />
+          <EntitySet Name="PRODUCT_SIZE" EntityType="ProductManagementModel.PRODUCT_SIZE" />
+          <EntitySet Name="PRODUCT_TYPE" EntityType="ProductManagementModel.PRODUCT_TYPE" />
+          <AssociationSet Name="FK_BILL_CUSTOMER" Association="ProductManagementModel.FK_BILL_CUSTOMER">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="BILL" EntitySet="BILL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_DETAIL_BILL" Association="ProductManagementModel.FK_PRODUCT_DETAIL_BILL">
+            <End Role="BILL" EntitySet="BILL" />
+            <End Role="PRODUCT_DETAIL" EntitySet="PRODUCT_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_DETAIL_PRODUCT" Association="ProductManagementModel.FK_PRODUCT_DETAIL_PRODUCT">
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+            <End Role="PRODUCT_DETAIL" EntitySet="PRODUCT_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_PRODUCT_BRAND" Association="ProductManagementModel.FK_PRODUCT_PRODUCT_BRAND">
+            <End Role="PRODUCT_BRAND" EntitySet="PRODUCT_BRAND" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_PRODUCT_SALE" Association="ProductManagementModel.FK_PRODUCT_PRODUCT_SALE">
+            <End Role="PRODUCT_SALE" EntitySet="PRODUCT_SALE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_PRODUCT_SIZE" Association="ProductManagementModel.FK_PRODUCT_PRODUCT_SIZE">
+            <End Role="PRODUCT_SIZE" EntitySet="PRODUCT_SIZE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCT_PRODUCT_TYPE" Association="ProductManagementModel.FK_PRODUCT_PRODUCT_TYPE">
+            <End Role="PRODUCT_TYPE" EntitySet="PRODUCT_TYPE" />
+            <End Role="PRODUCT" EntitySet="PRODUCT" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ADMIN">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="BILL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="TotalMoney" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CUSTOMER" Relationship="ProductManagementModel.FK_BILL_CUSTOMER" FromRole="BILL" ToRole="CUSTOMER" />
+          <NavigationProperty Name="PRODUCT_DETAIL" Relationship="ProductManagementModel.FK_PRODUCT_DETAIL_BILL" FromRole="BILL" ToRole="PRODUCT_DETAIL" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerSex" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerPhone" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BILL" Relationship="ProductManagementModel.FK_BILL_CUSTOMER" FromRole="CUSTOMER" ToRole="BILL" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="ProductImage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCount" Type="Int32" />
+          <Property Name="Size" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Brand" Type="Int32" Nullable="false" />
+          <Property Name="Sale" Type="Int32" Nullable="false" />
+          <Property Name="DateInsert" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCT_DETAIL" Relationship="ProductManagementModel.FK_PRODUCT_DETAIL_PRODUCT" FromRole="PRODUCT" ToRole="PRODUCT_DETAIL" />
+          <NavigationProperty Name="PRODUCT_BRAND" Relationship="ProductManagementModel.FK_PRODUCT_PRODUCT_BRAND" FromRole="PRODUCT" ToRole="PRODUCT_BRAND" />
+          <NavigationProperty Name="PRODUCT_SALE" Relationship="ProductManagementModel.FK_PRODUCT_PRODUCT_SALE" FromRole="PRODUCT" ToRole="PRODUCT_SALE" />
+          <NavigationProperty Name="PRODUCT_SIZE" Relationship="ProductManagementModel.FK_PRODUCT_PRODUCT_SIZE" FromRole="PRODUCT" ToRole="PRODUCT_SIZE" />
+          <NavigationProperty Name="PRODUCT_TYPE" Relationship="ProductManagementModel.FK_PRODUCT_PRODUCT_TYPE" FromRole="PRODUCT" ToRole="PRODUCT_TYPE" />
+        </EntityType>
+        <EntityType Name="PRODUCT_BRAND">
+          <Key>
+            <PropertyRef Name="Brand" />
+          </Key>
+          <Property Name="Brand" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCT" Relationship="ProductManagementModel.FK_PRODUCT_PRODUCT_BRAND" FromRole="PRODUCT_BRAND" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="PRODUCT_DETAIL">
+          <Key>
+            <PropertyRef Name="DetailID" />
+          </Key>
+          <Property Name="DetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="BillID" Type="Int32" Nullable="false" />
+          <Property Name="ProductCount" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BILL" Relationship="ProductManagementModel.FK_PRODUCT_DETAIL_BILL" FromRole="PRODUCT_DETAIL" ToRole="BILL" />
+          <NavigationProperty Name="PRODUCT" Relationship="ProductManagementModel.FK_PRODUCT_DETAIL_PRODUCT" FromRole="PRODUCT_DETAIL" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="PRODUCT_SALE">
+          <Key>
+            <PropertyRef Name="Sale" />
+          </Key>
+          <Property Name="Sale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SaleName" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PRODUCT" Relationship="ProductManagementModel.FK_PRODUCT_PRODUCT_SALE" FromRole="PRODUCT_SALE" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="PRODUCT_SIZE">
+          <Key>
+            <PropertyRef Name="Size" />
+          </Key>
+          <Property Name="Size" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SizeName" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCT" Relationship="ProductManagementModel.FK_PRODUCT_PRODUCT_SIZE" FromRole="PRODUCT_SIZE" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="PRODUCT_TYPE">
+          <Key>
+            <PropertyRef Name="Type" />
+          </Key>
+          <Property Name="Type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCT" Relationship="ProductManagementModel.FK_PRODUCT_PRODUCT_TYPE" FromRole="PRODUCT_TYPE" ToRole="PRODUCT" />
+        </EntityType>
+        <Association Name="FK_BILL_CUSTOMER">
+          <End Type="ProductManagementModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProductManagementModel.BILL" Role="BILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="BILL">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_DETAIL_BILL">
+          <End Type="ProductManagementModel.BILL" Role="BILL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProductManagementModel.PRODUCT_DETAIL" Role="PRODUCT_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BILL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCT_DETAIL">
+              <PropertyRef Name="BillID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_DETAIL_PRODUCT">
+          <End Type="ProductManagementModel.PRODUCT" Role="PRODUCT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProductManagementModel.PRODUCT_DETAIL" Role="PRODUCT_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCT_DETAIL">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_PRODUCT_BRAND">
+          <End Type="ProductManagementModel.PRODUCT_BRAND" Role="PRODUCT_BRAND" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProductManagementModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_BRAND">
+              <PropertyRef Name="Brand" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="Brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_PRODUCT_SALE">
+          <End Type="ProductManagementModel.PRODUCT_SALE" Role="PRODUCT_SALE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProductManagementModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_SALE">
+              <PropertyRef Name="Sale" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="Sale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_PRODUCT_SIZE">
+          <End Type="ProductManagementModel.PRODUCT_SIZE" Role="PRODUCT_SIZE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProductManagementModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_SIZE">
+              <PropertyRef Name="Size" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="Size" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCT_PRODUCT_TYPE">
+          <End Type="ProductManagementModel.PRODUCT_TYPE" Role="PRODUCT_TYPE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="ProductManagementModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT_TYPE">
+              <PropertyRef Name="Type" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProductManagementModelStoreContainer" CdmEntityContainer="ProductManagementContext">
+          <EntitySetMapping Name="ADMIN">
+            <EntityTypeMapping TypeName="ProductManagementModel.ADMIN">
+              <MappingFragment StoreEntitySet="ADMIN">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BILL">
+            <EntityTypeMapping TypeName="ProductManagementModel.BILL">
+              <MappingFragment StoreEntitySet="BILL">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TotalMoney" ColumnName="TotalMoney" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMER">
+            <EntityTypeMapping TypeName="ProductManagementModel.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="CustomerSex" ColumnName="CustomerSex" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT">
+            <EntityTypeMapping TypeName="ProductManagementModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCT">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="DateInsert" ColumnName="DateInsert" />
+                <ScalarProperty Name="Sale" ColumnName="Sale" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
+                <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT_BRAND">
+            <EntityTypeMapping TypeName="ProductManagementModel.PRODUCT_BRAND">
+              <MappingFragment StoreEntitySet="PRODUCT_BRAND">
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT_DETAIL">
+            <EntityTypeMapping TypeName="ProductManagementModel.PRODUCT_DETAIL">
+              <MappingFragment StoreEntitySet="PRODUCT_DETAIL">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
+                <ScalarProperty Name="BillID" ColumnName="BillID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT_SALE">
+            <EntityTypeMapping TypeName="ProductManagementModel.PRODUCT_SALE">
+              <MappingFragment StoreEntitySet="PRODUCT_SALE">
+                <ScalarProperty Name="SaleName" ColumnName="SaleName" />
+                <ScalarProperty Name="Sale" ColumnName="Sale" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT_SIZE">
+            <EntityTypeMapping TypeName="ProductManagementModel.PRODUCT_SIZE">
+              <MappingFragment StoreEntitySet="PRODUCT_SIZE">
+                <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCT_TYPE">
+            <EntityTypeMapping TypeName="ProductManagementModel.PRODUCT_TYPE">
+              <MappingFragment StoreEntitySet="PRODUCT_TYPE">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

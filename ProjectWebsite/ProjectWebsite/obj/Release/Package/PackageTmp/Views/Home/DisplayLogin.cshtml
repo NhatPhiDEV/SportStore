@@ -1,0 +1,25 @@
+﻿@using ProjectWebsite.Models
+@{
+    CUSTOMER cus = (CUSTOMER)Session["TaiKhoan"];
+
+
+    if (cus == null)
+    {
+        <div class="higher-line" style="font-size:15px">
+            Xin chào! Vui lòng
+            <a href="@Url.Action("Register","Account")">Đăng ký</a> hoặc
+            <a href="@Url.Action("Login","Account")" >Đăng nhập</a>
+        </div>
+    }
+    else
+    {
+        <div class="higher-line" style="font-size:15px">
+            Khách hàng: @Html.Action("NameUser", "Account") | 
+            <a href="@Url.Action("LogOut","Account")">Đăng Xuất</a>
+        </div>
+
+    }
+}
+
+
+

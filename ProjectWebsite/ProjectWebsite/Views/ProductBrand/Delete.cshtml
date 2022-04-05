@@ -1,0 +1,40 @@
+﻿@model ProjectWebsite.Models.PRODUCT_BRAND
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/Layout_Admin.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <div class="row">
+            <span id="Message" class="hidden">@TempData["Message"]</span>
+            <div class="col-lg-4">
+                <h4>Bạn có chắc chắn muốn xóa?</h4>
+            </div>
+            <div class="col-md-10">
+                <label>Mã thương hiệu:</label>
+            </div>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.Brand)
+            </div>
+            <div class="col-md-10">
+                <label>Tên thương hiệu:</label>
+            </div>
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.BrandName)
+            </div>
+            <div class="col-md-10">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Xóa ngay" style="margin-top:10px" class="btn btn-success" />
+                        <a class="btn btn-success" style="margin-top:10px;margin-left:10px" href="@Url.Action("Index","ProductBrand")">Quay lại</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</section>

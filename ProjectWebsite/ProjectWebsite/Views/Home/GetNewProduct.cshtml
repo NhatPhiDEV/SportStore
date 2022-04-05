@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ProjectWebsite.Models.PRODUCT>
+
+@foreach (var item in Model)
+{
+    <div class="span3">
+        <div class="product">
+            <div class="product-inner">
+                <div class="product-img">
+                    <div class="picture">
+                        <a href="@Url.Action("getDetail","Home",new { id = item.ID})"><img class="product_phiimg" src="~/Content/images/@item.ProductImage" alt="" width="540" height="374"></a>
+                        <div class="img-overlay">
+                            <a href="@Url.Action("getDetail","Home",new { id = item.ID})" class="btn more btn-primary">Chi tiết</a>
+                            <a href="@Url.Action("Addtocart","Cart", new {@ID = item.ID,@strURL = Request.Url.ToString()})" class="btn buy btn-danger">Thêm giỏ hàng</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-titles no-margin">
+                    <h4 class="title" style="color:red;">@String.Format("{0:0,0}", @item.ProductPrice) VND</h4>
+                    <h5 class="no-margin">@item.ProductName</h5>
+                </div>
+                <div class="row-fluid hidden-line">
+                    <div class="span6">
+                        <a href="#" class="btn btn-small"><i class="icon-heart"></i></a>
+                        <a href="#" class="btn btn-small"><i class="icon-exchange"></i></a>
+                    </div>
+                    <div class="span6 align-right">
+                        <span class="icon-star stars-clr"></span>
+                        <span class="icon-star stars-clr"></span>
+                        <span class="icon-star stars-clr"></span>
+                        <span class="icon-star stars-clr"></span>
+                        <span class="icon-star stars-clr"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

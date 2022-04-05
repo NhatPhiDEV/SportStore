@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ProjectWebsite.Models.PRODUCT_SALE>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout_Admin.cshtml";
+}
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <div class="row">
+            <span id="Message" class="hidden">@TempData["Message"]</span>
+            <div class="col-lg-12">
+                <div class="col-lg-12">
+                    <h4 style="text-align:center;margin-bottom: 20px;color:red;font-size:30px;font-weight:bold"> QUẢN LÝ KHUYẾN MÃI </h4>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading" style="color:black;font-weight:bold">
+                            Dữ liệu khuyến mãi
+
+                        </header>
+                        <div class="col-lg-8">
+                            <a class="btn btn-success" href="@Url.Action("Create","ProductSale") " style="margin-bottom:20px"> Thêm mới</a>
+                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="color:black;font-weight:bold;text-align:center">MÃ KHUYẾN MÃI</th>
+                                    <th style="color:black;font-weight:bold;text-align:center">TRỊ GIÁ</th>
+                                    <th style="color:black;font-weight:bold;text-align:center">CHỨC NĂNG</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td style="color:black;text-align:center">@item.Sale</td>
+                                        <td style="color:black;text-align:center">@item.SaleName</td>
+                                        <td style="text-align: center;">
+                                            <a class="btn btn-danger" href="@Url.Action("Delete","ProductSale",new { id = item.Sale})" style=" margin-left: 20px;">Xóa ngay <i class="fa fa-trash-o"></i></a>
+                                            <a class="btn btn-info" href="@Url.Action("Edit","ProductSale",new { id = item.Sale})" style=" margin-left: 20px;">Cập nhật <i class="fa fa-pencil"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

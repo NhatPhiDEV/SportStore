@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "BillCompleted";
+    Layout = "~/Views/Shared/Layout_CheckOut1.cshtml";
+}
+
+<span id="Message" class="hidden">@TempData["Message"]</span>
+<div class="row">
+    <div class="span10 offset1">
+        <header>
+            <div class="row">
+                <div class="span2">
+                    <a href="@Url.Action("Index","Home")"><img src="~/Content/images/logo-bw.png" title="Trang chủ" alt="Webmarket Logo" width="48" height="48" /></a>
+                </div>
+                <div class="span6">
+                    <div class="center-align">
+                        <h1><span class="light"></span> Hoàn Tất Đặt Hàng</h1>
+                    </div>
+                </div>
+                <div class="span2">
+                    <div class="right-align">
+                        <img src="~/Content/images/security.jpg" alt="Security Sign" width="92" height="65" />
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="checkout-steps">
+            <div class="clearfix">
+                <h3 class="center-align" style="margin:0px;font-size:18px;font-weight:normal">
+                    Chúng tôi đã nhận được
+                    đơn đặt hàng của bạn và sẽ gửi đến bạn một cách sớm nhất với chất lượng tốt nhất.
+                </h3>
+            </div>
+
+        </div>
+        <div class="span10 center-align">
+            <a class="btn btn-danger" href="@Url.Action("GetProduct","Product")" style="margin-bottom:20px;margin-top:0px"><i class="icon-shopping-cart"></i> &nbsp;Tiếp tục mua hàng</a>
+        </div>
+        
+        <div class="span10 center-align">
+            <img src="~/Content/images/posterbill.jpg" />
+        </div>
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var message = $('#Message').text();
+        if (message === '1') {
+            toastr.success('Chúc mừng quý khách đã tạo đơn hàng thành công!')
+        }
+        else if (message === '2') {
+            toastr.error('Quý khách vui lòng chọn phương thức thanh toán trước khi hoàn thành đơn hàng!')
+        }
+    });
+</script>

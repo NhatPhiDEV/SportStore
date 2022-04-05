@@ -1,0 +1,52 @@
+﻿@model ProjectWebsite.Models.PRODUCT_SALE
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Layout_Admin.cshtml";
+}
+@*Thông báo*@
+<script src="~/Scripts/Admin/js/jquery.js"></script>
+<link href="~/assets/toastr-master/toastr.css" rel="stylesheet" />
+<script src="~/assets/toastr-master/toastr.js"></script>
+@*Toastr*@
+<section id="main-content">
+    <section class="wrapper site-min-height">
+        <div class="row">
+            <span id="Message" class="hidden">@TempData["Message"]</span>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="col-lg-4">
+                    <div class="form-horizontal">
+                        <h4>Thêm mới khuyến mãi</h4>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <label>Nhập trị giá khuyến mãi:</label>
+                            </div>
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.SaleName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.SaleName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input type="submit" value="Thêm mới" class="btn btn-success" />
+                                <a class="btn btn-success" href="@Url.Action("Index","ProductSale")" style="margin-left:10px">Quay lại</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</section>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var message = $('#Message').text();
+        if (message === 'Thất Bại') {
+            toastr.warning('Vui lòng nhập đầy đủ thông tin');
+        }
+    });
+</script>

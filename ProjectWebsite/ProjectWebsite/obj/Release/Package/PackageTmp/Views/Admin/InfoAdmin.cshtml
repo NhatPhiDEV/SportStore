@@ -1,0 +1,11 @@
+﻿@using ProjectWebsite.Models
+@{
+    ADMIN admin = (ADMIN)Session["TaiKhoanAdmin"];
+
+}
+<li class="dropdown" style="margin-top:4px">
+    <a data-toggle="dropdown" class="dropdown-toggle">
+        <span class="username">@admin.Fullname</span>
+        <b class="caret"></b>
+    </a>
+</li>

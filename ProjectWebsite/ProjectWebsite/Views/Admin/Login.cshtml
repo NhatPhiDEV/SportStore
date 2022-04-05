@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Đăng Nhập Admin</title>
+    @*Reset css*@
+    <link href="~/Content/Admin/bootstrap-reset.css" rel="stylesheet" />
+    <link href="~/Content/Admin/bootstrap.min.css" rel="stylesheet" />
+    @*external css*@
+    <link href="~/assets/fontawesome/css/font-awesome.css" rel="stylesheet" />
+    @*Custom styles for this template*@
+    <link href="~/Content/Admin/style.css" rel="stylesheet" />
+    <link href="~/Content/Admin/style-responsive.css" rel="stylesheet" />
+    <link href="~/assets/toastr-master/toastr.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <div class="container">
+        <span id="Message" class="hidden">@TempData["Message"]</span>
+        <form class="form-signin" method="post">
+            <h2 class="form-signin-heading">Đăng nhập Admin</h2>
+            <div class="login-wrap">
+                <input type="text" class="form-control" name="txtUsername" placeholder="Nhập tài khoản...." autofocus>
+                <input type="password" class="form-control" name="txtPassword" placeholder="Nhập mật khẩu...">
+                <label class="checkbox">
+                    <input type="checkbox" style="margin-left:0px;margin-top:4px" value="remember-me">
+                    <label style="padding:0px;margin-left:18px;margin-top: 2px;">Lưu tài khoản</label>
+                    <span class="pull-right">
+                        <a data-toggle="modal"> Quên mật khẩu?</a>
+                    </span>
+                </label>
+                <input type="submit" class="btn btn-lg btn-login btn-block" value="Đăng nhập" />
+            </div>
+        </form>
+        <script src="~/Scripts/Admin/js/jquery.js"></script>
+        <script src="~/Scripts/Admin/js/bootstrap.min.js"></script>
+
+
+        <script src="~/assets/toastr-master/toastr.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var message = $('#Message').text();
+                if (message !== '') {
+                    toastr.error(message);
+                }
+            });
+        </script>
+    </div>   
+</body>
+</html>

@@ -1,0 +1,281 @@
+﻿@using ProjectWebsite.Models
+@model List<Cart>
+@{
+    ViewBag.Title = "Oder";
+    Layout = "~/Views/Shared/Layout_CheckOut1.cshtml";
+    CUSTOMER cus = (CUSTOMER)Session["TaiKhoan"];
+}
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+    paypal.Button.render({
+        // Configure environment
+        env: 'sandbox',
+        client: {
+            sandbox: 'AaU7nSW0nsCfV5uYEZzbSvtdtqk34JJ8PzQ3pAilsZX1-FUhecJDNnzwP_JLUtlgqPaLae46AtyL44Ce',
+            production: 'demo_production_client_id'
+        },
+        // Customize button (optional)
+        locale: 'en_US',
+        style: {
+            size: 'medium',
+            color: 'gold',
+            shape: 'pill',
+        },
+
+        // Enable Pay Now checkout flow (optional)
+        commit: true,
+
+        // Set up a payment
+        payment: function (data, actions) {
+            return actions.payment.create({
+                transactions: [{
+                    amount: {
+                        total: '@ViewBag.TotalMoneyUSD',
+                        currency: 'USD'
+                    }
+                }]
+            });
+        },
+        // Execute the payment
+        onAuthorize: function (data, actions) {
+            return actions.payment.execute().then(function () {
+                // Show a confirmation message to the buyer
+                toastr.success('Thanh toán thành công! Vui lòng chọn hoàn thành để hoàn tất đơn hàng');
+            });
+        }
+    }, '#paypal-button');
+</script>
+<span id="Message" class="hidden">@TempData["Message"]</span>
+<div class="row">
+    <div class="span10 offset1">
+        <header>
+            <div class="row">
+                <div class="span2">
+                    <a href="@Url.Action("Index","Home")"><img src="~/Content/images/logo-bw.png" title="Trang chủ" alt="Webmarket Logo" width="48" height="48" /></a>
+                </div>
+                <div class="span6">
+                    <div class="center-align">
+                        <h1><span class="light">Đơn Hàng</span> Của Bạn</h1>
+                    </div>
+                </div>
+                <div class="span2">
+                    <div class="right-align">
+                        <img src="~/Content/images/security.jpg" alt="Security Sign" width="92" height="65" />
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="checkout-steps">
+            <div class="clearfix">
+                <h3 class="left" style="margin:0px;font-size:18px">1. Thông Tin Sản Phẩm</h3>
+            </div>
+        </div>
+        <table class="table table-items">
+            <thead>
+                <tr>
+                    <th colspan="2" style="color:black;font-weight: bold;">SẢN PHẨM</th>
+                    <th>
+                        <div class="align-center" style="color:black;font-weight: bold;">SIZE</div>
+                    </th>
+                    <th>
+                        <div class="align-center" style="color:black;font-weight: bold;">SỐ LƯỢNG</div>
+                    </th>
+                    <th>
+                        <div class="align-center" style="color:black;font-weight: bold;">GIÁ TIỀN</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="image"><img src="~/Content/images/@item.ProductImage" alt="" width="60" height="60" /></td>
+                        <td class="desc" style="font-size:14px;font-weight:normal">
+                            &nbsp;
+                            @item.ProductName &nbsp;&nbsp;&nbsp;
+                            <a title="Xóa sản phẩm" class="icon-trash" style="color:black;font-size: 20px; text-decoration: none;" href="@Url.Action("DeleteCartOder", "Cart", new { @ID = item.ProductID })"></a>
+                        </td>
+                        <td class="qty" style="text-align:center;">
+                            <input type="text" class="tiny-size" disabled style="background-color:yellow;color:red;margin:0px;font-weight:bold;" value="@item.ProductSize" />
+                        </td>
+                        <td class="qty">
+                            <input type="text" class="tiny-size" disabled style="background-color:yellow;color:red;font-weight:bold;" value="@item.ProductCount" />
+                        </td>
+                        <td class="price" style="text-align:center;">
+                            @String.Format("{0:0,0}", @item.ProductPrice) VND
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="3" rowspan="2">
+                        <div class="alert alert-info">
+                            <button data-dismiss="alert" class="close" type="button">×</button> Chi phí vận chuyển phụ thuộc vào khoản cách từ nơi nhận hàng đến nơi giao hàng.
+                        </div>
+                    </td>
+
+                    <td class="stronger">SL mặt hàng:</td>
+                    <td class="stronger">
+                        <div class="align-right">@ViewBag.TotalCount</div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="stronger">Thành Tiền:</td>
+                    <td class="stronger">
+                        <div class="size-16 align-right" style="color:red">@String.Format("{0:0,0}", @ViewBag.TotalMoney) VND</div>
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+@using (Html.BeginForm("Oder", "Cart", FormMethod.Post))
+{
+    <div class="row">
+        <div class="span10 offset1">
+            <div class="checkout-steps">
+                <div class="clearfix">
+                    <h3 class="left" style="margin:0px;font-size:18px">2. Thông Tin Khách Hàng</h3>
+                </div>
+            </div>
+            <div class="span10" style="display: inline-flex;">
+                <div class="left" style="width:565px;margin-right:55px;margin-left:-25px;">
+                    <h4 style="text-align:left;margin-left:85px;color:red;">Thông tin khách nhận hàng</h4>
+                    <hr size="3" color="red" style="margin-left:105px;margin-right:280px;margin-top:4px;margin-bottom:20px" />
+                    <div style="margin-top:1px;">
+                        <label style="float: left; text-align: center;width:255px;margin-right:18px;">Họ và tên khách nhận<span class="red-clr bold"> *</span></label>
+                        <input type="text" name="fullname" style="width:440px;margin-left:50px" required>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <label style="float: left; text-align: center;width:239px;margin-right:16px;">Địa chỉ khách nhận<span class="red-clr bold"> *</span></label>
+                        <input type="text" name="address" style="width:440px;margin-left:50px" required>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <label style="float: left; text-align: center;width:247px;margin-right:5px">Liên Lạc khách nhận<span class="red-clr bold"> *</span></label>
+                        <input type="text" name="phone" style="width:440px;margin-left:50px" required>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <label style="float: left; text-align: center;width:230px;margin-right:5px">Email khách nhận<span class="red-clr bold"> *</span></label>
+                        <input type="email" name="email" style="width:440px;margin-left:50px" required>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <label style="float: left; text-align: left;margin-left:50px;width:400px;margin-right:5px">Ngày Nhận Hàng<span class="red-clr bold"> *</span></label>
+                        <input type="date" name="Dateend" style="width:440px;margin-left:50px" required>
+                    </div>
+                </div>
+                <div class="right" style="width:350px;background-color:#E6E6E6;">
+                    <h4 style="text-align:center;margin-bottom:1px;color:red;">Thông tin khách đặt hàng</h4>
+                    <hr size="3" color="red" style="margin-left:85px;margin-right:85px;margin-top:4px;margin-bottom: 20px;" />
+                    <div class="text_align" style="margin-top:0px;">
+                        <label style="float: left; margin-left: 21px; text-align: center;">Họ và tên<span class="red-clr bold"> *</span></label>
+                        <input type="text" name="Fullname2" value="@cus.CustomerName" style="width:280px;margin-left:20px;" disabled>
+                    </div>
+                    <div class="text_align" style="margin-top:10px">
+                        <label style="float: left; margin-left: 21px; text-align: center;">Địa chỉ<span class="red-clr bold"> *</span></label>
+                        <input type="text" name="Address2" value="@cus.CustomerAddress" style="width:280px;margin-left:20px;" disabled>
+                    </div>
+                    <div class="text_align" style="margin-top:10px;margin-bottom:10px">
+                        <label style="float: left;margin-left:21px; text-align: center;">Liên Lạc<span class="red-clr bold"> *</span></label>
+                        <input type="tel" name="Phone2" value="@cus.CustomerPhone" style="width:280px;margin-left:20px;" disabled>
+                    </div>
+                    <div class="text_align" style="margin-top:10px;margin-bottom:10px">
+                        <label style="float: left;margin-left:21px; text-align: center;">Email<span class="red-clr bold"> *</span></label>
+                        <input type="email" name="email" value="@cus.CustomerEmail" style="width:280px;margin-left:20px;" disabled>
+                    </div>
+                    <div class="text_align" style="margin-top:10px;margin-bottom:35px">
+                        <label style="float: left;margin-left:21px; text-align: center;">Ngày Đặt<span class="red-clr bold"> *</span></label>
+                        <input type="text" name="Datecrate" value="@DateTime.Now.ToShortDateString()" style="width:280px;margin-left:20px;" disabled>
+                    </div>
+                </div>
+            </div>         
+        </div>
+    </div>
+    <div class="row">
+        <div class="span10 offset1">
+            <div class="checkout-steps">
+                <div class="clearfix">
+                    <h3 class="left" style="margin:0px;font-size:18px">3. Phương Thức Thanh Toán</h3>
+                </div>
+            </div>
+
+
+            <div class="span10" style="display: inline-flex;">
+
+                <div class="left" style="width:340px;margin-left:-25px;">
+                    <label style="float: left; text-align: center;width:320px;margin-right:18px;">Chọn Phương Thức Thanh Toán<span class="red-clr bold"></span></label>
+                    <select class="select-css" name="cbxPayMent" style="width:260px;margin-left:50px;">
+                        <option value="default" hidden>
+                            -- Chọn phương thức thanh toán --
+                        </option>
+                        <option value="Thanh Toán Khi Nhận Hàng">
+                            Thanh Toán Khi Nhận Hàng
+                        </option>
+                        <option value="Thanh Toán Với PayPal">
+                            Thanh Toán qua PayPal
+                        </option>
+                    </select>
+                    @ViewData["Loi1"]
+                </div>
+                <div class="left" style="width:340px;margin-left:-25px;">
+                    <label style="float: left; text-align: center;width:550px;margin-right:18px;">Nếu chọn thanh toán với paypal vui lòng click vào button dưới đây:<span class="red-clr bold"></span></label>
+                    <div id="paypal-button" style="margin-left:150px;width:340px;">
+                    </div>
+                </div>
+            </div>
+            <div class="span12" style="margin-top:35px">
+                <p class="right-align" style="margin-right: 225px;">
+                    Khi xác nhận thông tin đã chính xác khách hàng xin vui lòng ấn hoàn tất để hoàn thành đơn hàng... &nbsp; &nbsp;
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-primary higher bold">QUAY LẠI</a>
+                    &nbsp;
+                    &nbsp;
+                    <input type="submit" class="btn btn-primary higher bold" value="HOÀN TẤT" />
+                </p>
+            </div>
+        </div>
+    </div>
+}
+    <style>
+        .select-css {
+            display: block;
+            font-size: 14px;
+            font-family: sans-serif;
+            color: #444;
+            line-height: 1.3;
+            padding: .6em 1.4em .5em .8em;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+            border: 1px solid #aaa;
+            box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+            border-radius: .5em;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'), linear-gradient(to bottom, #ffffff 0%,#e5e5e5 100%);
+            background-repeat: no-repeat, repeat;
+            background-position: right .7em top 50%, 0 0;
+            background-size: .65em auto, 100%;
+        }
+
+            .select-css::-ms-expand {
+                display: none;
+            }
+
+            .select-css:hover {
+                border-color: #888;
+            }
+
+            .select-css:focus {
+                border-color: #aaa;
+                box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+                color: #222;
+                outline: none;
+            }
+
+            .select-css option {
+                font-weight: normal;
+            }
+    </style>

@@ -1,0 +1,7 @@
+﻿@model IEnumerable<ProjectWebsite.Models.PRODUCT_SIZE>
+<div class="accordion-inner">
+    @foreach (var item in Model)
+    {
+       <a href="@Url.Action("GetProductWithSize","Product",new { id = item.Size})" data-type="size" class="select-type"><i class="box"></i> @item.SizeName</a>
+    }
+</div>
